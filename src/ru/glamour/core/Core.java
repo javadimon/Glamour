@@ -78,5 +78,34 @@ public class Core {
             return new ArrayList<>();
         }
     }
+    
+    public int addEquipment(String value) {
+        return sqon.insert("equipment", value);
+    }
+
+    public boolean updateEquipment(int rowid, String value) {
+        return sqon.update(rowid, value);
+    }
+
+    public boolean removeEquipment(int rowid) {
+        return sqon.delete(rowid);
+    }
+    
+    public ArrayList<JSONObject> getAllEquipment() {
+        try {
+            ArrayList<JSONObject> list = new ArrayList<>();
+            List<SQONItem> items = sqon.getValues("equipment");
+            for (SQONItem item : items) {
+                JSONObject jsonObject = new JSONObject(item.getJSON());
+                list.add(jsonObject);
+            }
+            
+            return list;
+            
+        } catch (JSONException e) {
+            Logger.getGlobal().log(Level.SEVERE, null, e);
+            return new ArrayList<>();
+        }
+    }
 
 }
