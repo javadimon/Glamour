@@ -41,9 +41,9 @@ public class Core {
                 JSONObject jsonObject = new JSONObject(item.getJSON());
                 list.add(jsonObject);
             }
-            
+
             return list;
-            
+
         } catch (JSONException e) {
             Logger.getGlobal().log(Level.SEVERE, null, e);
             return new ArrayList<>();
@@ -61,7 +61,7 @@ public class Core {
     public boolean removeCustomer(int rowid) {
         return sqon.delete(rowid);
     }
-    
+
     public ArrayList<JSONObject> getAllCustomer() {
         try {
             ArrayList<JSONObject> list = new ArrayList<>();
@@ -70,15 +70,15 @@ public class Core {
                 JSONObject jsonObject = new JSONObject(item.getJSON());
                 list.add(jsonObject);
             }
-            
+
             return list;
-            
+
         } catch (JSONException e) {
             Logger.getGlobal().log(Level.SEVERE, null, e);
             return new ArrayList<>();
         }
     }
-    
+
     public int addEquipment(String value) {
         return sqon.insert("equipment", value);
     }
@@ -90,7 +90,7 @@ public class Core {
     public boolean removeEquipment(int rowid) {
         return sqon.delete(rowid);
     }
-    
+
     public ArrayList<JSONObject> getAllEquipment() {
         try {
             ArrayList<JSONObject> list = new ArrayList<>();
@@ -99,13 +99,58 @@ public class Core {
                 JSONObject jsonObject = new JSONObject(item.getJSON());
                 list.add(jsonObject);
             }
-            
+
             return list;
-            
+
         } catch (JSONException e) {
             Logger.getGlobal().log(Level.SEVERE, null, e);
             return new ArrayList<>();
         }
     }
+
+    public boolean setWorkHoursByDay(String value) {
+        return sqon.addOrModify("workHoursByDay", value);
+    }
+
+    public boolean setOperations(String value) {
+        return sqon.addOrModify("opertaions", value);
+    }
+
+    public boolean setBooking(int dateStart, int dateEnd, String value) {
+        int id = -1;
+        boolean success = false;
+
+        List<SQONItem> items = sqon.getValuesByKeyAndDateInterval("booking", dateStart, dateEnd);
+
+        if (items.isEmpty()) {
+            id = sqon.insert("booking", value);
+        } else {
+            success = sqon.update(items.get(0).getRowid(), value);
+        }
+
+        return id >= 0 || success != false;
+    }
+
+    public List<JSONObject> getBookingByDates(int dateStart, int dateEnd) {
+        try {
+            List<SQONItem> items = sqon.getValuesByKeyAndDateInterval("booking", dateStart, dateEnd);
+            ArrayList<JSONObject> booking = new ArrayList<>();
+            for (SQONItem item : items) {
+                booking.add(new JSONObject(item.getJSON()));
+            }
+
+            return booking;
+
+        } catch (JSONException e) {
+            Logger.getGlobal().log(Level.WARNING, null, e);
+            return new ArrayList<>();
+        }
+    }
+    
+    // sales
+    
+    // salary distribution by operation by employee
+    
+    // goods in - out
 
 }
