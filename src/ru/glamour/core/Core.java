@@ -161,11 +161,67 @@ public class Core {
     }
     
     // sales
+    public ArrayList<JSONObject> computeSalary(){
+        ArrayList<JSONObject> list = new ArrayList<>();
+        // TODO
+        return list;
+    }
     
     // salary distribution by operation by employee
+    public int addSalaryDistribution(String value) {
+        return sqon.insert("salaryDistribution", value);
+    }
+
+    public boolean updateSalaryDistribution(int rowid, String value) {
+        return sqon.update(rowid, value);
+    }
+
+    public boolean removeSalaryDistribution(int rowid) {
+        return sqon.delete(rowid);
+    }
+
+    public ArrayList<JSONObject> getAllSalaryDistribution() {
+        return getValuesByKey("salaryDistribution");
+    }
     
     // add goods
+    public int addGoods(String value) {
+        return sqon.insert("goods", value);
+    }
+
+    public boolean updateGoods(int rowid, String value) {
+        return sqon.update(rowid, value);
+    }
+
+    public boolean removeGoods(int rowid) {
+        return sqon.delete(rowid);
+    }
+
+    public ArrayList<JSONObject> getAllGoods() {
+        return getValuesByKey("goods");
+    }
     
     // goods in - out
+    public int addGoodsOrder(String value) {
+        return sqon.insert("goods", value);
+    }
 
+    public boolean updateGoodsOrder(int rowid, String value) {
+        return sqon.update(rowid, value);
+    }
+
+    public boolean removeGoodsOrder(int rowid) {
+        return sqon.delete(rowid);
+    }
+
+    public ArrayList<JSONObject> getAllGoodsOrder() {
+        return getValuesByKey("goods");
+    }
+    
+    public ArrayList<JSONObject> getReports(int ... reportType) {
+        // TODO
+        return null;
+    }
+    
+    
 }
